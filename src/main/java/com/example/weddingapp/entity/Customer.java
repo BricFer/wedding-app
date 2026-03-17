@@ -1,5 +1,7 @@
 package com.example.weddingapp.entity;
 
+import com.example.weddingapp.enums.Role;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,27 +31,16 @@ public class Customer {
     @Column(name="username", nullable = false, unique = true)
     private String username;
 
+    @Column
+    private String fullname;
+
     @Column(name="pwd", nullable = false)
     private String password;
 
     @Column(name="email", nullable = false)
     private String email;
 
-    @Column(name = "is_admin", nullable = false)
-    private Boolean isAdmin;
-
-    /**
-     * Constructor without the attributte id use for new users
-     *
-     * @param username Nickname use by the user
-     * @param password Code to validate the user access
-     * @param email User's electronic address
-     * @param isAdmin Attributte that identifies the user as admin or not
-     */
-    public Customer(String username, String password, String email, Boolean isAdmin) {
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.isAdmin = (isAdmin != null) && isAdmin;
-    }
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role = Role.USER;
 }

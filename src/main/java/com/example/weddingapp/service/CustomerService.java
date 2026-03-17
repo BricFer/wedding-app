@@ -1,8 +1,11 @@
 package com.example.weddingapp.service;
 
 import com.example.weddingapp.entity.Customer;
+import com.example.weddingapp.enums.Role;
 import com.example.weddingapp.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -16,6 +19,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class CustomerService implements UserDetailsService {
 
@@ -27,7 +31,7 @@ public class CustomerService implements UserDetailsService {
         Customer customer = repo.findByEmail(username).orElseThrow(() ->
                 new UsernameNotFoundException(("User details not found!"))
         );
-        List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority(customer.getIsAdmin() ? "admin" : "read"));
+        List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority(customer.getRole().equals(Role.ADMIN) ? "admin" : "read"));
         return new User(customer.getEmail(), customer.getPassword(), authorities);
     }
 

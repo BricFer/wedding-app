@@ -36,3 +36,4 @@ application.properties
 /src/test
 /src/**/DataLoader.java
 /src/**/webapp/
+README.MD
