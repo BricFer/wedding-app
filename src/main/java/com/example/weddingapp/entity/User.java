@@ -7,6 +7,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.LocalDateTime;
+
 /**
  * Entity representing a registered User in DB.
  * Mapped using JPA anotations
@@ -21,7 +25,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Setter
 @Getter
-public class Customer {
+public class User {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,4 +47,11 @@ public class Customer {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role = Role.USER;
+
+    @CreationTimestamp
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 }

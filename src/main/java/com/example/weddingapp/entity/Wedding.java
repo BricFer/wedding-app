@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+
 /**
  * Entity representing a wedding.
  * Mapped using JPA anotations
@@ -28,7 +30,7 @@ public class Wedding {
     @Column(name = "wedding_id")
     private Long id;
 
-    @Column
+    @Column(name = "name")
     private String name;
 
     @Column
@@ -37,6 +39,11 @@ public class Wedding {
     @Column
     private String location;
 
+    @CreationTimestamp
     @Column(name = "created_at")
     private LocalDateTime createdAt;
+
+    @ManyToOne
+    @JoinColumn(name = "created_by_id")
+    private User createdBy;
 }

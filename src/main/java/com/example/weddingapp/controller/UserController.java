@@ -2,7 +2,8 @@ package com.example.weddingapp.controller;
 
 import java.util.logging.Logger;
 
-import com.example.weddingapp.service.CustomerService;
+import com.example.weddingapp.entity.User;
+import com.example.weddingapp.service.WebbAppUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,7 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.weddingapp.classes.Pages;
-import com.example.weddingapp.entity.Customer;
 
 @RestController
 @RequiredArgsConstructor
@@ -19,7 +19,7 @@ public class UserController {
     
     private static final Logger LOG = Logger.getLogger(UserController.class.getName());
 
-    private final CustomerService service;
+    private final WebbAppUserService service;
 
     @GetMapping("/add-user")
     public String addUser() {
@@ -27,12 +27,12 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    // TODO: Ver cómo debería pasar la información del nuevo usuario sin usar directamente el Customer
-    public ResponseEntity<String> registerUser(@RequestBody Customer customer) {
+    // TODO: Ver cómo debería pasar la información del nuevo usuario sin usar directamente el User
+    public ResponseEntity<String> registerUser(@RequestBody User user) {
         try {
-            Customer savedCustomer = service.saveUser(customer);
+            User savedUser = service.saveUser(user);
 
-            if(savedCustomer.getId() > 0) {
+            if(savedUser.getId() > 0) {
                 return ResponseEntity.status(HttpStatus.CREATED)
                         .body("User created successfully");
             } else {
@@ -55,7 +55,7 @@ public class UserController {
     }
 
     @PostMapping("/confirmation")
-    public String updateProfile(@ModelAttribute("userModel") Customer user) {
+    public String updateProfile(@ModelAttribute("userModel") User user) {
 
         try {
             service.saveUser(user);

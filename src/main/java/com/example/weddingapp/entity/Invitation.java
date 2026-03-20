@@ -50,6 +50,9 @@ public class Invitation {
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
+    @Column(name = "updated_at", nullable = false)
+    private LocalDateTime updatedAt;
+
     public boolean isConfirmed() {
         return this.status == InvitationStatus.CONFIRMED;
     }

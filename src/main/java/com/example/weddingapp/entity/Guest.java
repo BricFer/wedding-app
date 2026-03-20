@@ -44,8 +44,8 @@ public class Guest implements Serializable {
     @JoinColumn(name = "wedding_id", nullable = false)
     private Wedding wedding;
 
-    @Column(nullable = false)
-    private String fullname;
+    @Column(name = "fullname", nullable = false)
+    private String name;
 
     @Column(nullable = false)
     private String email;
@@ -56,16 +56,17 @@ public class Guest implements Serializable {
     @Column
     private String relationship;
 
+    @Column(name = "dietary_restrictions")
     private String dietaryRestrictions;
 
-    @Column(nullable = false)
+    @Column(name = "number_of_guests", nullable = false)
     private Integer numberOfGuests = 1;
     
     @OneToMany(mappedBy = "guest", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Invitation> invitations = new ArrayList<>();
 
     @CreationTimestamp
-    @Column(nullable = false, name = "created_at")
+    @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
     
     @UpdateTimestamp
@@ -74,11 +75,11 @@ public class Guest implements Serializable {
     
     @ManyToOne
     @JoinColumn(name = "created_by_id")
-    private Customer createdBy;
+    private User createdBy;
     
     @ManyToOne
     @JoinColumn(name = "updated_by_id")
-    private Customer updatedBy;
+    private User updatedBy;
 
     public boolean isConfirmed() {
         return invitations.stream().anyMatch(Invitation::isConfirmed);
